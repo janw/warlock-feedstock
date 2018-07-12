@@ -1,7 +1,7 @@
-{%set name = "warlock" %}
-{%set version = "1.3.0" %}
-{%set hash_type = "sha256" %}
-{%set hash_val = "d7403f728fce67ee2f22f3d7fa09c9de0bc95c3e7bcf6005b9c1962b77976a06" %}
+{% set name = "warlock" %}
+{% set version = "1.3.0" %}
+{% set hash_type = "sha256" %}
+{% set hash_val = "d7403f728fce67ee2f22f3d7fa09c9de0bc95c3e7bcf6005b9c1962b77976a06" %}
 
 package:
   name: {{ name }}
@@ -9,15 +9,17 @@ package:
 
 source:
   fn: {{ name }}-{{ version }}.tar.gz
-  url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
+  url: https://pypi.org/packages/source/{{ name[0] }}/{{ name }}/{{ name }}-{{ version }}.tar.gz
   {{ hash_type }}: {{ hash_val }}
 
 build:
-  number: 0
-  script: python setup.py install --single-version-externally-managed --record=record.txt
+  noarch: python
+  number: 1
+  script: python -m pip install --no-deps --ignore-installed .
 
 requirements:
-  build:
+  host:
+    - pip
     - python
     - setuptools
 
